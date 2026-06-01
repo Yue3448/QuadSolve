@@ -137,7 +137,7 @@ try:
 except Exception:
     pass
 
-# объявление окна:
+# window start:
 root = tk.Tk()
 root.title('QuadSolve')
 root.geometry('940x650')
@@ -150,7 +150,7 @@ root.iconbitmap('favicon.ico')
 logo_label = tk.Label(root, image=logo_img)
 logo_label.img = logo_img
 
-# виджеты:
+# widgets:
 formula_box = tk.Label(root, text='d = b² - 4ac', relief='solid', borderwidth=4, padx=10, pady=15, font=('Arial', 35))
 info_box = tk.Label(root, text='Info', relief='solid', borderwidth=4, padx=10, pady=15, font=('Arial', 35))
 
@@ -191,7 +191,7 @@ version_label = tk.Label(root, text="version 1.0", font=('Arial', 10))
 link_label = tk.Label(root, text='Github', fg='purple', cursor='hand2')
 link_label.bind('<Button-1>', github)
 
-# размещение виджетов:
+# place widgets:
 formula_box.grid(row=0, column=0, padx=70, pady=30)
 info_box.grid(row=0, column=1, padx=270, pady=30)
 input_frame.grid(row=1, column=0, pady=5)
