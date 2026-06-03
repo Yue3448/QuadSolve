@@ -2,6 +2,8 @@ import tkinter as tk
 import webbrowser
 import ctypes
 from math import *
+import cmath
+from tkinter import messagebox
 
 
 # Backend:
@@ -22,6 +24,8 @@ def calculate():
         b = float(entry_b.get())
         c = float(entry_c.get())
     except ValueError:
+
+        messagebox.showerror('ERROR', 'Error! Try input number.')
         entry_x1.config(state='normal')
         entry_x1.delete(0, tk.END)
         entry_x1.insert(0, 'None')
@@ -49,7 +53,33 @@ def calculate():
     output_d.insert(0, discriminant)
     output_d.config(state='readonly')
 
-    if discriminant < 0:
+    if discriminant < 0 and a != 0:
+        sq_val_complex = cmath.sqrt(discriminant)
+        x1 = (-b + sq_val_complex) / (2 * a)
+        x2 = (-b - sq_val_complex) / (2 * a)
+
+        x1_real = x1.real
+        x1_imag = abs(x1.imag)
+
+        x2_real = x2.real
+        x2_imag = abs(x2.imag)
+
+        entry_x1.config(state='normal')
+        entry_x1.delete(0, tk.END)
+        entry_x1.insert(0, f'{x1_real} + {x1_imag}i')
+        entry_x1.config(state='readonly')
+
+        entry_x2.config(state='normal')
+        entry_x2.delete(0, tk.END)
+        entry_x2.insert(0, f'{x2_real} - {x2_imag}i')
+        entry_x2.config(state='readonly')
+
+        output_sq.config(state='normal')
+        output_sq.delete(0, tk.END)
+        output_sq.insert(0, sq_val_complex)
+        output_sq.config(state='readonly')
+
+    elif discriminant < 0:
         output_d.config(state='normal')
         output_d.delete(0, tk.END)
         output_d.insert(0, 'd < 0')
@@ -115,22 +145,6 @@ def calculate():
         entry_x2.insert(0, 'None')
         entry_x2.config(state='readonly')
 
-    else:
-        entry_x1.config(state='normal')
-        entry_x1.delete(0, tk.END)
-        entry_x1.insert(0, 'None')
-        entry_x1.config(state='readonly')
-
-        entry_x2.config(state='normal')
-        entry_x2.delete(0, tk.END)
-        entry_x2.insert(0, 'None')
-        entry_x2.config(state='readonly')
-
-        output_sq.config(state='normal')
-        output_sq.delete(0, tk.END)
-        output_sq.insert(0, 'No root')
-        output_sq.config(state='readonly')
-
 
 try:
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
@@ -186,7 +200,7 @@ copy_button_x1 = tk.Button(result_frame, text='copy', font=('Arial', 12), comman
 copy_button_x2 = tk.Button(result_frame, text='copy', font=('Arial', 12), command=copy_x2)
 
 label_calc = tk.Button(root, text='Calculate', font=('Arial', 25), command=calculate)
-version_label = tk.Label(root, text="version 1.0", font=('Arial', 10))
+version_label = tk.Label(root, text="v1.0.1", font=('Arial', 10))
 
 link_label = tk.Label(root, text='Github', fg='purple', cursor='hand2')
 link_label.bind('<Button-1>', github)
